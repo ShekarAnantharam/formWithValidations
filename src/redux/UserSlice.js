@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
-  name: 'users',
+  name: 'user',
   initialState: [],
   reducers: {
     addUser: (state, action) => {
@@ -9,13 +9,21 @@ const userSlice = createSlice({
     },
     updateUser: (state, action) => {
       const { id, updatedUser } = action.payload;
-      state[id] = updatedUser;
+      const userIndex = state.findIndex((user) => user.id === id);
+      if (userIndex !== -1) {
+        state[userIndex] = { ...state[userIndex], ...updatedUser };
+      }
     },
     deleteUser: (state, action) => {
-      state.splice(action.payload, 1);
+      const id = action.payload;
+      const userIndex = state.findIndex((user) => user.id === id);
+      if (userIndex !== -1) {
+        state.splice(userIndex, 1);
+      }
     },
   },
 });
 
 export const { addUser, updateUser, deleteUser } = userSlice.actions;
+
 export default userSlice.reducer;

@@ -1,18 +1,24 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import UserForm from './components/UserForm';
-import UserTable from './components/UserTable';
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './redux/UserSlice';
+import RegistrationForm from './components/RegistrationForm';
 
-function App() {
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+  },
+});
+
+const App = () => {
   return (
     <Provider store={store}>
-      <div className="App">
-        <UserForm />
-        <UserTable />
+      <div>
+        <h1>Registration Form</h1>
+        <RegistrationForm />
       </div>
     </Provider>
   );
-}
+};
 
 export default App;
